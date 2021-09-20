@@ -1,0 +1,13 @@
+{
+  "name": "raisely-for-wordpress",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel watch src/index.js  --no-hmr --out-dir dist",
+    "build": "parcel build src/index.js  --no-source-maps --out-dir dist"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5"
+  }
+}
