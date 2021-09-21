@@ -1,17 +1,506 @@
-parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcelRequire,u="function"==typeof require&&require;function f(t,n){if(!r[t]){if(!e[t]){var i="function"==typeof parcelRequire&&parcelRequire;if(!n&&i)return i(t,!0);if(o)return o(t,!0);if(u&&"string"==typeof t)return u(t);var c=new Error("Cannot find module '"+t+"'");throw c.code="MODULE_NOT_FOUND",c}p.resolve=function(r){return e[t][1][r]||r},p.cache={};var l=r[t]=new f.Module(t);e[t][0].call(l.exports,p,l,l.exports,this)}return r[t].exports;function p(e){return f(p.resolve(e))}}f.isParcelRequire=!0,f.Module=function(e){this.id=e,this.bundle=f,this.exports={}},f.modules=e,f.cache=r,f.parent=o,f.register=function(r,t){e[r]=[function(e,r){r.exports=t},{}]};for(var c=0;c<t.length;c++)try{f(t[c])}catch(e){i||(i=e)}if(t.length){var l=f(t[t.length-1]);"object"==typeof exports&&"undefined"!=typeof module?module.exports=l:"function"==typeof define&&define.amd?define(function(){return l}):n&&(this[n]=l)}if(parcelRequire=f,i)throw i;return f}({"hDlO":[function(require,module,exports) {
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var e=function(e){var t=e.condition,r=e.src,n=e.parent,o=e.onMount;if(!t)return null;if(!n.querySelector('script[src="'.concat(r,'"]'))){console.log("creating script");var c=document.createElement("script");c.id="myID1",c.src=r,o&&c.addEventListener("load",function(){return o(c)}),n.appendChild(c)}return null},t=e;exports.default=t;
-},{}],"pVGv":[function(require,module,exports) {
+// modules are defined as an array
+// [ module function, map of requires ]
+//
+// map of requires is short require name -> numeric require
+//
+// anything defined in a previous bundle is accessed via the
+// orig method which is the require for previous bundles
+parcelRequire = (function (modules, cache, entry, globalName) {
+  // Save the require from previous bundle to this closure if any
+  var previousRequire = typeof parcelRequire === 'function' && parcelRequire;
+  var nodeRequire = typeof require === 'function' && require;
 
-},{}],"sARD":[function(require,module,exports) {
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=A;var e=require("./index"),t=r(require("../../components/ScriptAppender"));require("./styles.css");var n=["attributes","setAttributes"];function r(e){return e&&e.__esModule?e:{default:e}}function a(e,t){return u(e)||i(e,t)||o(e,t)||l()}function l(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}function o(e,t){if(e){if("string"==typeof e)return c(e,t);var n=Object.prototype.toString.call(e).slice(8,-1);return"Object"===n&&e.constructor&&(n=e.constructor.name),"Map"===n||"Set"===n?Array.from(e):"Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)?c(e,t):void 0}}function c(e,t){(null==t||t>e.length)&&(t=e.length);for(var n=0,r=new Array(t);n<t;n++)r[n]=e[n];return r}function i(e,t){var n=null==e?null:"undefined"!=typeof Symbol&&e[Symbol.iterator]||e["@@iterator"];if(null!=n){var r,a,l=[],o=!0,c=!1;try{for(n=n.call(e);!(o=(r=n.next()).done)&&(l.push(r.value),!t||l.length!==t);o=!0);}catch(i){c=!0,a=i}finally{try{o||null==n.return||n.return()}finally{if(c)throw a}}return l}}function u(e){if(Array.isArray(e))return e}function s(e,t){if(null==e)return{};var n,r,a=m(e,t);if(Object.getOwnPropertySymbols){var l=Object.getOwnPropertySymbols(e);for(r=0;r<l.length;r++)n=l[r],t.indexOf(n)>=0||Object.prototype.propertyIsEnumerable.call(e,n)&&(a[n]=e[n])}return a}function m(e,t){if(null==e)return{};var n,r,a={},l=Object.keys(e);for(r=0;r<l.length;r++)n=l[r],t.indexOf(n)>=0||(a[n]=e[n]);return a}var p=wp.i18n.__,d=wp.element,f=d.useEffect,y=d.useState,b=d.useRef,h=d.useCallback,v=wp.apiFetch,g=wp.blockEditor,E=g.BlockIcon,w=g.BlockControls,R=wp.components,S=R.Placeholder,k=R.Button,O=R.SelectControl,C=R.Spinner,_=R.ToolbarButton,j=R.ToolbarGroup;function A(r){var l=r.attributes,o=r.setAttributes,c=(s(r,n),l.campaignPath),i=e.metadata.icon,u=e.metadata.title,m=a(y(!0),2),d=m[0],g=m[1],R=a(y(null),2),A=R[0],P=R[1],I=a(y([]),2),B=I[0],x=I[1],M=a(y(c),2),N=M[0],q=M[1],T=a(y(!1),2),F=T[0],U=T[1],G=a(y(!!c),2),L=G[0],$=G[1],z=a(y(null),2),D=z[0],H=z[1],J=h(H,[]),K=b(null),Q=b();f(function(){var e;return Q.current=!0,null!==(e=window.raiselyBlocks)&&void 0!==e&&e.nonce&&v.use(v.createNonceMiddleware(window.raiselyBlocks.nonce)),v({path:"/raisely/v1/campaigns-list"}).then(function(e){var t,n;Q.current&&(g(!1),e.auth?x(e.data):P(React.createElement("span",null,"Setup your connection with Raisely on the ",React.createElement("a",{href:null===(t=window)||void 0===t?void 0:null===(n=t.raiselyBlocks)||void 0===n?void 0:n.settingsPage,target:"_blank"},"Raisely Settings page")," to retrieve a list of your Raisely campaigns.")))}).catch(function(e){Q.current&&(console.error(e),x([]),g(!1),P("Oops... Something went wrong. Please try again later."))}),function(){Q.current=!1,K.current&&clearInterval(K.current)}},[]);return React.createElement(React.Fragment,null,React.createElement(w,null,React.createElement(j,null,L&&React.createElement(_,{className:"components-toolbar__control",label:p("Edit URL"),icon:"edit",onClick:function(){return $(!1)}}))),React.createElement("div",{class:"wp-raisely-block-donation-form"},L?React.createElement("div",{id:"raisely-donate","data-campaign-path":c,"data-width":"100%","data-height":"800",ref:J},!F&&React.createElement(C,null),React.createElement(t.default,{condition:!!D,src:"https://cdn.raisely.com/v3/public/embed.js",parent:D,onMount:function(){var e=setInterval(function(){var e=D.querySelector("iframe");e&&(e.attachEvent?e.attachEvent("onload",function(){return U(!0)}):e.onload=function(){return U(!0)},e.style.pointerEvents="none",K.current=null,clearInterval(K.current))},1e3);K.current=e}})):React.createElement(S,{icon:React.createElement(E,{icon:i,showColors:!0}),label:"".concat(u," Campaign"),className:"wp-block-embed",instructions:p("Raisely Campaign you wish to embed")},d?React.createElement(C,null):A?React.createElement("p",null,A):B.length?React.createElement(React.Fragment,null,React.createElement(O,{className:"raisely-placeholder__input",value:c,onChange:function(e){return q(e)},options:B.map(function(e){return{value:e.path,label:e.name}})}),React.createElement(k,{className:"is-primary",onClick:function(){console.log({embedCampaignPath:N}),o({campaignPath:N}),$(!0)}},"Embed")):React.createElement("p",null,"There are no campaigns to select from."))))}
-},{"./index":"VUH8","../../components/ScriptAppender":"hDlO","./styles.css":"pVGv"}],"IK76":[function(require,module,exports) {
-"use strict";function e(){return React.createElement("h1",null,React.createElement("span",null,"Here is a donation form"))}Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=e;
-},{}],"oOo6":[function(require,module,exports) {
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.logo=void 0;var e=wp.primitives,l=e.SVG,t=e.Path,o=React.createElement(l,{fill:"none",xmlns:"http://www.w3.org/2000/svg",viewBox:"0 0 152 152"},React.createElement(t,{"fill-rule":"evenodd","clip-rule":"evenodd",d:"M34.2 123.5l41.9-47.3 41.7 47.4a63.22 63.22 0 01-41.7 15.8c-16.1-.1-30.8-6.1-41.9-15.9zM76 12.7c34.9 0 63.3 28.4 63.3 63.3 0 14.4-4.8 27.6-12.9 38.3L76.1 57.1l-50.6 57.1c-8-10.6-12.8-23.8-12.8-38.2 0-34.9 28.4-63.3 63.3-63.3zM76 0C34.1 0 0 34.1 0 76s34.1 76 76 76 76-34.1 76-76S117.9 0 76 0z",fill:"#6138D8"}));exports.logo=o;
-},{}],"lJq5":[function(require,module,exports) {
-module.exports={apiVersion:2,name:"raisely/donation-form",title:"Raisely Donation Form",category:"embed",description:"Displays a Raisely campaign donation form.",keywords:["recent content"],textdomain:"default",attributes:{campaignPath:{type:"string"}},supports:{align:!0,html:!1,className:!1}};
-},{}],"VUH8":[function(require,module,exports) {
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),Object.defineProperty(exports,"metadata",{enumerable:!0,get:function(){return o.default}}),exports.settings=exports.name=void 0;var e=a(require("./edit")),t=a(require("./save")),r=require("./icon"),o=a(require("./block.json"));function a(e){return e&&e.__esModule?e:{default:e}}var n=o.default.name;exports.name=n;var u={icon:r.logo,example:{},edit:e.default};exports.settings=u;
-},{"./edit":"sARD","./save":"IK76","./icon":"oOo6","./block.json":"lJq5"}],"Focm":[function(require,module,exports) {
-"use strict";var e=r(require("./blocks/RaiselyDonationForm"));function t(e){if("function"!=typeof WeakMap)return null;var r=new WeakMap,n=new WeakMap;return(t=function(e){return e?n:r})(e)}function r(e,r){if(!r&&e&&e.__esModule)return e;if(null===e||"object"!=typeof e&&"function"!=typeof e)return{default:e};var n=t(r);if(n&&n.has(e))return n.get(e);var a={},o=Object.defineProperty&&Object.getOwnPropertyDescriptor;for(var i in e)if("default"!==i&&Object.prototype.hasOwnProperty.call(e,i)){var f=o?Object.getOwnPropertyDescriptor(e,i):null;f&&(f.get||f.set)?Object.defineProperty(a,i,f):a[i]=e[i]}return a.default=e,n&&n.set(e,a),a}var n=wp.blocks.registerBlockType,a=function(e){if(e){var t=e.metadata,r=e.settings,a=e.name;n(a,Object.assign(t,r))}};[e].forEach(a);
-},{"./blocks/RaiselyDonationForm":"VUH8"}]},{},["Focm"], null)
+  function newRequire(name, jumped) {
+    if (!cache[name]) {
+      if (!modules[name]) {
+        // if we cannot find the module within our internal map or
+        // cache jump to the current global require ie. the last bundle
+        // that was added to the page.
+        var currentRequire = typeof parcelRequire === 'function' && parcelRequire;
+        if (!jumped && currentRequire) {
+          return currentRequire(name, true);
+        }
+
+        // If there are other bundles on this page the require from the
+        // previous one is saved to 'previousRequire'. Repeat this as
+        // many times as there are bundles until the module is found or
+        // we exhaust the require chain.
+        if (previousRequire) {
+          return previousRequire(name, true);
+        }
+
+        // Try the node require function if it exists.
+        if (nodeRequire && typeof name === 'string') {
+          return nodeRequire(name);
+        }
+
+        var err = new Error('Cannot find module \'' + name + '\'');
+        err.code = 'MODULE_NOT_FOUND';
+        throw err;
+      }
+
+      localRequire.resolve = resolve;
+      localRequire.cache = {};
+
+      var module = cache[name] = new newRequire.Module(name);
+
+      modules[name][0].call(module.exports, localRequire, module, module.exports, this);
+    }
+
+    return cache[name].exports;
+
+    function localRequire(x){
+      return newRequire(localRequire.resolve(x));
+    }
+
+    function resolve(x){
+      return modules[name][1][x] || x;
+    }
+  }
+
+  function Module(moduleName) {
+    this.id = moduleName;
+    this.bundle = newRequire;
+    this.exports = {};
+  }
+
+  newRequire.isParcelRequire = true;
+  newRequire.Module = Module;
+  newRequire.modules = modules;
+  newRequire.cache = cache;
+  newRequire.parent = previousRequire;
+  newRequire.register = function (id, exports) {
+    modules[id] = [function (require, module) {
+      module.exports = exports;
+    }, {}];
+  };
+
+  var error;
+  for (var i = 0; i < entry.length; i++) {
+    try {
+      newRequire(entry[i]);
+    } catch (e) {
+      // Save first error but execute all entries
+      if (!error) {
+        error = e;
+      }
+    }
+  }
+
+  if (entry.length) {
+    // Expose entry point to Node, AMD or browser globals
+    // Based on https://github.com/ForbesLindesay/umd/blob/master/template.js
+    var mainExports = newRequire(entry[entry.length - 1]);
+
+    // CommonJS
+    if (typeof exports === "object" && typeof module !== "undefined") {
+      module.exports = mainExports;
+
+    // RequireJS
+    } else if (typeof define === "function" && define.amd) {
+     define(function () {
+       return mainExports;
+     });
+
+    // <script>
+    } else if (globalName) {
+      this[globalName] = mainExports;
+    }
+  }
+
+  // Override the current require with this new one
+  parcelRequire = newRequire;
+
+  if (error) {
+    // throw error from earlier, _after updating parcelRequire_
+    throw error;
+  }
+
+  return newRequire;
+})({"components/ScriptAppender.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var ScriptAppender = function ScriptAppender(_ref) {
+  var condition = _ref.condition,
+      src = _ref.src,
+      parent = _ref.parent,
+      onMount = _ref.onMount;
+  // Check condition
+  if (!condition) return null; // Check if script already exists
+
+  var existingScript = parent.querySelector("script[src=\"".concat(src, "\"]"));
+
+  if (!existingScript) {
+    console.log('creating script');
+    var script = document.createElement('script');
+    script.id = 'myID1';
+    script.src = src;
+
+    if (!!onMount) {
+      script.addEventListener('load', function () {
+        return onMount(script);
+      });
+    }
+
+    parent.appendChild(script);
+  }
+
+  return null;
+};
+
+var _default = ScriptAppender;
+exports.default = _default;
+},{}],"blocks/RaiselyDonationForm/styles.css":[function(require,module,exports) {
+
+},{}],"blocks/RaiselyDonationForm/edit.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = DonationFormEdit;
+
+var _index = require("./index");
+
+var _ScriptAppender = _interopRequireDefault(require("../../components/ScriptAppender"));
+
+require("./styles.css");
+
+var _excluded = ["attributes", "setAttributes"];
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+/**
+ * WordPress dependencies
+ */
+var __ = wp.i18n.__;
+var _wp$element = wp.element,
+    useEffect = _wp$element.useEffect,
+    useState = _wp$element.useState,
+    useRef = _wp$element.useRef,
+    useCallback = _wp$element.useCallback;
+var apiFetch = wp.apiFetch;
+var _wp$blockEditor = wp.blockEditor,
+    BlockIcon = _wp$blockEditor.BlockIcon,
+    BlockControls = _wp$blockEditor.BlockControls;
+var _wp$components = wp.components,
+    Placeholder = _wp$components.Placeholder,
+    Button = _wp$components.Button,
+    SelectControl = _wp$components.SelectControl,
+    Spinner = _wp$components.Spinner,
+    ToolbarButton = _wp$components.ToolbarButton,
+    ToolbarGroup = _wp$components.ToolbarGroup;
+
+function DonationFormEdit(_ref) {
+  var attributes = _ref.attributes,
+      setAttributes = _ref.setAttributes,
+      props = _objectWithoutProperties(_ref, _excluded);
+
+  var campaignPath = attributes.campaignPath;
+  var icon = _index.metadata.icon,
+      title = _index.metadata.title;
+
+  var _useState = useState(true),
+      _useState2 = _slicedToArray(_useState, 2),
+      loading = _useState2[0],
+      setLoading = _useState2[1];
+
+  var _useState3 = useState(null),
+      _useState4 = _slicedToArray(_useState3, 2),
+      error = _useState4[0],
+      setError = _useState4[1];
+
+  var _useState5 = useState([]),
+      _useState6 = _slicedToArray(_useState5, 2),
+      campaignsList = _useState6[0],
+      setCampaignsList = _useState6[1];
+
+  var _useState7 = useState(campaignPath),
+      _useState8 = _slicedToArray(_useState7, 2),
+      embedCampaignPath = _useState8[0],
+      setCampaignPath = _useState8[1];
+
+  var _useState9 = useState(false),
+      _useState10 = _slicedToArray(_useState9, 2),
+      iframeLoaded = _useState10[0],
+      setIframeLoaded = _useState10[1];
+
+  var _useState11 = useState(!!campaignPath),
+      _useState12 = _slicedToArray(_useState11, 2),
+      preview = _useState12[0],
+      setPreview = _useState12[1];
+
+  var _useState13 = useState(null),
+      _useState14 = _slicedToArray(_useState13, 2),
+      formWrapper = _useState14[0],
+      setFormWrapper = _useState14[1];
+
+  var formWrapperRef = useCallback(setFormWrapper, []);
+  var isIframeLoaded = useRef(null);
+  var isStillMounted = useRef();
+  useEffect(function () {
+    var _window$raiselyBlocks;
+
+    isStillMounted.current = true;
+
+    if ((_window$raiselyBlocks = window.raiselyBlocks) !== null && _window$raiselyBlocks !== void 0 && _window$raiselyBlocks.nonce) {
+      apiFetch.use(apiFetch.createNonceMiddleware(window.raiselyBlocks.nonce));
+    }
+
+    apiFetch({
+      path: "/raisely/v1/campaigns-list"
+    }).then(function (res) {
+      if (isStillMounted.current) {
+        setLoading(false);
+
+        if (res.auth) {
+          setCampaignsList(res.data);
+        } else {
+          var _window, _window$raiselyBlocks2;
+
+          setError( /*#__PURE__*/React.createElement("span", null, "Setup your connection with Raisely on the ", /*#__PURE__*/React.createElement("a", {
+            href: (_window = window) === null || _window === void 0 ? void 0 : (_window$raiselyBlocks2 = _window.raiselyBlocks) === null || _window$raiselyBlocks2 === void 0 ? void 0 : _window$raiselyBlocks2.settingsPage,
+            target: "_blank"
+          }, "Raisely Settings page"), " to retrieve a list of your Raisely campaigns."));
+        }
+      }
+    }).catch(function (e) {
+      if (isStillMounted.current) {
+        console.error(e);
+        setCampaignsList([]);
+        setLoading(false);
+        setError("Oops... Something went wrong. Please try again later.");
+      }
+    });
+    return function () {
+      isStillMounted.current = false;
+
+      if (isIframeLoaded.current) {
+        clearInterval(isIframeLoaded.current);
+      }
+    };
+  }, []);
+
+  var onScriptMount = function onScriptMount() {
+    var iframeLoadedInterval = setInterval(function () {
+      var iframe = formWrapper.querySelector('iframe');
+
+      if (!!iframe) {
+        // Set on load events
+        if (iframe.attachEvent) {
+          iframe.attachEvent("onload", function () {
+            setIframeLoaded(true);
+          });
+        } else {
+          iframe.onload = function () {
+            setIframeLoaded(true);
+          };
+        }
+
+        iframe.style.pointerEvents = 'none';
+        clearInterval(isIframeLoaded.current);
+        isIframeLoaded.current = null;
+      }
+    }, 1000);
+    isIframeLoaded.current = iframeLoadedInterval;
+  };
+
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(BlockControls, null, /*#__PURE__*/React.createElement(ToolbarGroup, null, preview && /*#__PURE__*/React.createElement(ToolbarButton, {
+    className: "components-toolbar__control",
+    label: __('Edit URL'),
+    icon: 'edit',
+    onClick: function onClick() {
+      return setPreview(false);
+    }
+  }))), /*#__PURE__*/React.createElement("div", {
+    class: "wp-raisely-block-donation-form"
+  }, !preview ? /*#__PURE__*/React.createElement(Placeholder, {
+    icon: /*#__PURE__*/React.createElement(BlockIcon, {
+      icon: icon,
+      showColors: true
+    }),
+    label: "".concat(title, " Campaign"),
+    className: "wp-block-embed",
+    instructions: __('Raisely Campaign you wish to embed')
+  }, loading ? /*#__PURE__*/React.createElement(Spinner, null) : error ? /*#__PURE__*/React.createElement("p", null, error) : !campaignsList.length ? /*#__PURE__*/React.createElement("p", null, "There are no campaigns to select from.") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SelectControl, {
+    className: "raisely-placeholder__input",
+    value: campaignPath,
+    onChange: function onChange(value) {
+      return setCampaignPath(value);
+    },
+    options: campaignsList.map(function (_ref2) {
+      var path = _ref2.path,
+          name = _ref2.name;
+      return {
+        value: path,
+        label: name
+      };
+    })
+  }), /*#__PURE__*/React.createElement(Button, {
+    className: "is-primary",
+    onClick: function onClick() {
+      console.log({
+        embedCampaignPath: embedCampaignPath
+      });
+      setAttributes({
+        campaignPath: embedCampaignPath
+      });
+      setPreview(true);
+    }
+  }, "Embed"))) : /*#__PURE__*/React.createElement("div", {
+    id: "raisely-donate",
+    "data-campaign-path": campaignPath,
+    "data-width": "100%",
+    "data-height": "800",
+    ref: formWrapperRef
+  }, !iframeLoaded && /*#__PURE__*/React.createElement(Spinner, null), /*#__PURE__*/React.createElement(_ScriptAppender.default, {
+    condition: !!formWrapper,
+    src: "https://cdn.raisely.com/v3/public/embed.js",
+    parent: formWrapper,
+    onMount: onScriptMount
+  }))));
+}
+},{"./index":"blocks/RaiselyDonationForm/index.js","../../components/ScriptAppender":"components/ScriptAppender.jsx","./styles.css":"blocks/RaiselyDonationForm/styles.css"}],"blocks/RaiselyDonationForm/save.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = DonationFormSave;
+
+function DonationFormSave() {
+  return /*#__PURE__*/React.createElement("h1", null, /*#__PURE__*/React.createElement("span", null, "Here is a donation form"));
+}
+},{}],"blocks/RaiselyDonationForm/icon.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.logo = void 0;
+
+/**
+ * WordPress dependencies
+ */
+var _wp$primitives = wp.primitives,
+    SVG = _wp$primitives.SVG,
+    Path = _wp$primitives.Path;
+var logo = /*#__PURE__*/React.createElement(SVG, {
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 152 152"
+}, /*#__PURE__*/React.createElement(Path, {
+  "fill-rule": "evenodd",
+  "clip-rule": "evenodd",
+  d: "M34.2 123.5l41.9-47.3 41.7 47.4a63.22 63.22 0 01-41.7 15.8c-16.1-.1-30.8-6.1-41.9-15.9zM76 12.7c34.9 0 63.3 28.4 63.3 63.3 0 14.4-4.8 27.6-12.9 38.3L76.1 57.1l-50.6 57.1c-8-10.6-12.8-23.8-12.8-38.2 0-34.9 28.4-63.3 63.3-63.3zM76 0C34.1 0 0 34.1 0 76s34.1 76 76 76 76-34.1 76-76S117.9 0 76 0z",
+  fill: "#6138D8"
+}));
+exports.logo = logo;
+},{}],"blocks/RaiselyDonationForm/block.json":[function(require,module,exports) {
+module.exports = {
+  "apiVersion": 2,
+  "name": "raisely/donation-form",
+  "title": "Raisely Donation Form",
+  "category": "embed",
+  "description": "Displays a Raisely campaign donation form.",
+  "keywords": ["recent content"],
+  "textdomain": "default",
+  "attributes": {
+    "campaignPath": {
+      "type": "string"
+    }
+  },
+  "supports": {
+    "align": false,
+    "html": false,
+    "className": false
+  }
+};
+},{}],"blocks/RaiselyDonationForm/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "metadata", {
+  enumerable: true,
+  get: function () {
+    return _block.default;
+  }
+});
+exports.settings = exports.name = void 0;
+
+var _edit = _interopRequireDefault(require("./edit"));
+
+var _save = _interopRequireDefault(require("./save"));
+
+var _icon = require("./icon");
+
+var _block = _interopRequireDefault(require("./block.json"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Internal dependencies
+ */
+var name = _block.default.name;
+exports.name = name;
+var settings = {
+  icon: _icon.logo,
+  example: {},
+  edit: _edit.default // save
+
+};
+exports.settings = settings;
+},{"./edit":"blocks/RaiselyDonationForm/edit.jsx","./save":"blocks/RaiselyDonationForm/save.jsx","./icon":"blocks/RaiselyDonationForm/icon.jsx","./block.json":"blocks/RaiselyDonationForm/block.json"}],"index.js":[function(require,module,exports) {
+"use strict";
+
+var RaiselyDonationForm = _interopRequireWildcard(require("./blocks/RaiselyDonationForm"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var registerBlockType = wp.blocks.registerBlockType;
+/**
+ * Function to register an individual block.
+ *
+ * @param {Object} block The block to be registered.
+ *
+ */
+
+var registerBlock = function registerBlock(block) {
+  if (!block) {
+    return;
+  }
+
+  var metadata = block.metadata,
+      settings = block.settings,
+      name = block.name;
+  registerBlockType(name, Object.assign(metadata, settings));
+};
+
+[RaiselyDonationForm].forEach(registerBlock);
+},{"./blocks/RaiselyDonationForm":"blocks/RaiselyDonationForm/index.js"}]},{},["index.js"], null)
+//# sourceMappingURL=/index.js.map

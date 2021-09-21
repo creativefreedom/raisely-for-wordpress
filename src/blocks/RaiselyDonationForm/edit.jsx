@@ -82,17 +82,20 @@ export default function DonationFormEdit({ attributes, setAttributes, ...props }
       const iframe = formWrapper.querySelector('iframe');
 
       if (!!iframe) {
-
         // Set on load events
         if (iframe.attachEvent) {
-          iframe.attachEvent("onload", () => setIframeLoaded(true));
+          iframe.attachEvent("onload", () => {
+            setIframeLoaded(true)
+          });
         } else {
-          iframe.onload = () => setIframeLoaded(true);
+          iframe.onload = () => {
+            setIframeLoaded(true);
+          }
         }
 
         iframe.style.pointerEvents = 'none';
-        isIframeLoaded.current = null;
         clearInterval(isIframeLoaded.current);
+        isIframeLoaded.current = null;
       }
     }, 1000);
     isIframeLoaded.current = iframeLoadedInterval;

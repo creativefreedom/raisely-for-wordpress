@@ -12,7 +12,7 @@
 		}
 	},
 	"supports": {
-		"align": true,
+		"align": false,
 		"html": false,
     "className": false
 	}
