@@ -25,13 +25,13 @@ class Assets
 	 */
   private function _bootstrap()
   {
-    add_action( 'enqueue_block_assets', [$this, 'block_assets']);
+    add_action( 'enqueue_block_editor_assets', [$this, 'block_assets']);
   }
 
   /**
    * Enqueue block assets.
    * 
-   * Hooked into `enqueue_block_assets` action.
+   * Hooked into `enqueue_block_editor_assets` action.
    * 
    * @return  void
    */

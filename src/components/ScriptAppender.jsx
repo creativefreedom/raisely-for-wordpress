@@ -5,9 +5,10 @@ const ScriptAppender = ({ condition, src, parent, onMount }) => {
 
   // Check if script already exists
   const existingScript = parent.querySelector(`script[src="${src}"]`);
-
   if (!existingScript) {
+    console.log('creating script');
     const script = document.createElement('script');
+    script.id = 'myID1';
     script.src = src;
 
     if (!!onMount) {
@@ -17,7 +18,6 @@ const ScriptAppender = ({ condition, src, parent, onMount }) => {
     parent.appendChild(script);
 
   }
-
 
   return null;
 }

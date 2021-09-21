@@ -13,5 +13,5 @@ export const settings = {
   icon: logo,
   example: {},
   edit,
-  save
+  // save
 };

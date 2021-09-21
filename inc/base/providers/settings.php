@@ -74,7 +74,7 @@ class Settings
       'raisely_auth_method',
       [
         'type'    => 'string',
-        'default' => 'api_key'
+        'default' => ''
       ]
     );
 

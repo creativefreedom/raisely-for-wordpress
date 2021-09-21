@@ -9,10 +9,9 @@ import "./styles.css";
  * WordPress dependencies
  */
 const { __ } = wp.i18n;
-const { useEffect, useState, useRef } = wp.element;
+const { useEffect, useState, useRef, useCallback } = wp.element;
 const apiFetch = wp.apiFetch;
 const {
-  // useBlockProps,
   BlockIcon,
   BlockControls
 } = wp.blockEditor;
@@ -27,7 +26,6 @@ const {
 
 export default function DonationFormEdit({ attributes, setAttributes, ...props }) {
   const { campaignPath } = attributes;
-  // const { title } = settings;
   const { icon, title } = metadata;
 
   const [loading, setLoading] = useState(true);
@@ -36,11 +34,13 @@ export default function DonationFormEdit({ attributes, setAttributes, ...props }
   const [embedCampaignPath, setCampaignPath] = useState(campaignPath);
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [preview, setPreview] = useState(!!campaignPath);
+  const [formWrapper, setFormWrapper] = useState(null);
 
-  // const blockProps = useBlockProps();
-  const formWrapper = useRef(null);
+  const formWrapperRef = useCallback(setFormWrapper, []);
+
   const isIframeLoaded = useRef(null);
   const isStillMounted = useRef();
+
 
   useEffect(() => {
     isStillMounted.current = true;
@@ -48,7 +48,7 @@ export default function DonationFormEdit({ attributes, setAttributes, ...props }
     if (window.raiselyBlocks?.nonce) {
       apiFetch.use(apiFetch.createNonceMiddleware(window.raiselyBlocks.nonce));
     }
-    // return;
+
     apiFetch({
       path: `/raisely/v1/campaigns-list`,
     }).then(res => {
@@ -79,13 +79,20 @@ export default function DonationFormEdit({ attributes, setAttributes, ...props }
 
   const onScriptMount = () => {
     const iframeLoadedInterval = setInterval(() => {
-      const iframe = formWrapper.current.querySelector('iframe');
+      const iframe = formWrapper.querySelector('iframe');
 
       if (!!iframe) {
+
+        // Set on load events
+        if (iframe.attachEvent) {
+          iframe.attachEvent("onload", () => setIframeLoaded(true));
+        } else {
+          iframe.onload = () => setIframeLoaded(true);
+        }
+
         iframe.style.pointerEvents = 'none';
-        setIframeLoaded(true);
-        clearInterval(isIframeLoaded.current);
         isIframeLoaded.current = null;
+        clearInterval(isIframeLoaded.current);
       }
     }, 1000);
     isIframeLoaded.current = iframeLoadedInterval;
@@ -95,7 +102,7 @@ export default function DonationFormEdit({ attributes, setAttributes, ...props }
     <>
       <BlockControls>
         <ToolbarGroup>
-          {false && preview && (
+          {preview && (
             <ToolbarButton
               className="components-toolbar__control"
               label={__('Edit URL')}
@@ -130,6 +137,7 @@ export default function DonationFormEdit({ attributes, setAttributes, ...props }
                   options={campaignsList.map(({ path, name }) => ({ value: path, label: name }))}
                 />
                 <Button className="is-primary" onClick={() => {
+                  console.log({ embedCampaignPath })
                   setAttributes({ campaignPath: embedCampaignPath })
                   setPreview(true);
                 }}>
@@ -143,13 +151,13 @@ export default function DonationFormEdit({ attributes, setAttributes, ...props }
             data-campaign-path={campaignPath}
             data-width="100%"
             data-height="800"
-            ref={formWrapper}
+            ref={formWrapperRef}
           >
             {!iframeLoaded && (<Spinner />)}
             <ScriptAppender
-              condition={formWrapper.current !== null}
+              condition={!!formWrapper}
               src="https://cdn.raisely.com/v3/public/embed.js"
-              parent={formWrapper.current}
+              parent={formWrapper}
               onMount={onScriptMount}
             />
           </div>

@@ -70,6 +70,7 @@ class Raisely {
   {
     include_once RAISELY_WP_PLUGIN_PATH . 'inc/base/providers/admin.php';
     include_once RAISELY_WP_PLUGIN_PATH . 'inc/base/providers/assets.php';
+    include_once RAISELY_WP_PLUGIN_PATH . 'inc/base/providers/blocks.php';
     include_once RAISELY_WP_PLUGIN_PATH . 'inc/base/providers/shortcodes.php';
     include_once RAISELY_WP_PLUGIN_PATH . 'inc/base/providers/services.php';
     include_once RAISELY_WP_PLUGIN_PATH . 'inc/base/providers/settings.php';
@@ -77,6 +78,7 @@ class Raisely {
 
 		$this->admin			= new Admin;
 		$this->assets			= new Assets;
+		$this->blocks			= new Blocks;
 		$this->shortcodes	= new Shortcodes;
 		$this->services		= new Services;
 		$this->settings		= new Settings;
