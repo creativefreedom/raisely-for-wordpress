@@ -7,7 +7,7 @@
 ?>
 <div class="wrap">
   <h1>Raisely Donation Form Settings</h1>
-  <p>Configure your Raisely donation form to be used as a shortcode or in a block anywhere on your site. Use [raisely form=ID] shortcode or Raisely Donation Form block in posts, pages, or a sidebar after setting up everything below. Questions or problems? Go to <a href="https://support.raisely.com/" target="_blank">support.raisely.com</a>.</p>
+  <p>Configure your Raisely donation form to be used as a shortcode or in a block anywhere on your site. Use the shortcode (<em>[raisely_donation_form campaign={campaign-id}]</em>) or Raisely Donation Form block to add your donation form to WordPress. Questions or problems? Go to <a href="https://support.raisely.com/" target="_blank">support.raisely.com</a>.</p>
   <hr>
   <?php if( ! empty( raisely()->settings->get_setting('auth_method') ) ) : ?>
     <div id="poststuff">

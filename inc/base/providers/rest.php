@@ -40,9 +40,9 @@ class Rest
     register_rest_route( 'raisely/v1', '/campaigns-list', [
       'methods'   => 'GET',
       'callback'  => [$this, 'campaigns_list_response'],
-      // 'permission_callback' => function () {
-      //   return current_user_can( 'edit_posts' );
-      // }
+      'permission_callback' => function () {
+        return current_user_can( 'edit_posts' );
+      }
     ] );
   }
 
@@ -79,5 +79,4 @@ class Rest
       'data'  => $campaign_paths
     ];
   }
-
 }
