@@ -124,7 +124,7 @@ class Settings
    *
    * @return array<string>   Key value array of settings field values
    */
-  public function get_settings(): array
+  public function get_settings()
   {
     return apply_filters(
       'raisely_get_settings', 
@@ -134,8 +134,8 @@ class Settings
           'access_token'  => $this->get_setting( 'access_token' ),
           'auth_method'   => $this->get_setting( 'auth_method' ),
         ], 
-        $this->get_setting( 'login_credentials' ) 
-      )
+        $this->get_setting( 'login_credentials' ) ?: ['username' => '', 'password' => '']
+      ) 
     );
   }
 
