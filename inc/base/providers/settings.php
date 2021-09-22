@@ -28,7 +28,6 @@ class Settings
     add_action( 'admin_menu', [$this, 'register_admin_pages'] );
     add_action( 'admin_init', [$this, 'register_options'] );
     add_action( 'pre_update_option_raisely_api_key', [$this, 'handle_api_key_update'], 10, 2 );
-    add_action( 'pre_update_option_raisely_login_credentials', [$this, 'handle_raisely_login'], 10, 2 );
   }
 
   /**
@@ -78,37 +77,12 @@ class Settings
       ]
     );
 
-    register_setting(
-      'raisely-login-settings', 
-      'raisely_access_token',
-      [
-        'type'    => 'string',
-        'default' => ''
-      ]
-    );
-
-    register_setting(
-      'raisely-login-settings', 
-      'raisely_login_credentials',
-      [
-        'type'    => 'array',
-        'default' => ['username' => '', 'password' => '']
-      ]
-    );
-
     // Add Settings Sections
     add_settings_section(
       'raisely-api-settings',
       'Authenticate with API Key',
       function(){ raisely()->render( 'partials', 'api-settings-fields' ); },
       'raisely_settings'
-    );
-
-    add_settings_section(
-      'raisely-login-settings',
-      'Authenticate with Login Credentials',
-      function(){ raisely()->render( 'partials', 'login-settings-fields' ); },
-      'raisely_login_settings'
     );
 
     add_settings_section(
@@ -128,14 +102,10 @@ class Settings
   {
     return apply_filters(
       'raisely_get_settings', 
-      array_merge( 
-        [
-          'api_key'       => $this->get_setting( 'api_key' ),
-          'access_token'  => $this->get_setting( 'access_token' ),
-          'auth_method'   => $this->get_setting( 'auth_method' ),
-        ], 
-        $this->get_setting( 'login_credentials' ) ?: ['username' => '', 'password' => '']
-      ) 
+      [
+        'api_key'       => $this->get_setting( 'api_key' ),
+        'auth_method'   => $this->get_setting( 'auth_method' ),
+      ]
     );
   }
 
@@ -177,100 +147,6 @@ class Settings
     $api = raisely()->api();
 
     return $new_value;
-  }
-
-  /**
-   * Handle Raisely login via settings page.
-   * 
-   * Hooked into `pre_update_option_raisely_login_credentials` action.
-   * 
-   * @access  public
-   * 
-   * @param   mixed   $new_value  The new, unserialized option value.
-   * @param   mixed   $old_value  The old option value.
-   * @return  string              Option name.
-   */
-  public function handle_raisely_login( $new_value, $old_value )
-  {
-    if( ! empty( $new_value['username'] ) && ! empty( $new_value['password'] ) ) {
-
-      // Clear any existing tokens from new connection request.
-      add_filter( 'raisely_connection_token', '__return_null' );
-
-      // Add response handlers.
-      add_action( "raisely_login_post_request_success", [$this, 'handle_successful_login'], 10, 3 );
-      add_action( "raisely_login_post_request_fail", [$this, 'handle_failed_login'], 10, 3 );
-
-      // Initialise API.
-      $api = raisely()->api();
-
-      // Send request.
-      $api->post( 
-        'login', 
-        [
-          'username'          => $new_value['username'], 
-          'password'          => $new_value['password'],
-          'requestAdminToken' => true
-        ]
-      );
-      
-    } else {
-      // If insufficent values are given remove authentication.
-      update_option( 'raisely_access_token', '' );
-      update_option( 'raisely_auth_method', '' );
-    }
-
-    // Do not save password to database.
-    if( ! empty( $new_value['password'] ) ) {
-      $new_value['password'] = '';
-    }
-
-    return $new_value;
-  }
-
-  /**
-   * Handle successful login via Raisely Login API.
-   * 
-   * Hooked into `raisely_login_post_request_success` action.
-   * 
-   * @param   object  $body     The response body.
-   * @param   int     $code     HTTP response code.
-   * @param   array   $response The response object.
-   * @return  void
-   */
-  public function handle_successful_login( $body, $code, $response ): void
-  {
-    if( ! empty( $body->token ) ) {
-      update_option( 'raisely_access_token', $body->token );
-      update_option( 'raisely_auth_method', 'access_token' );
-      add_settings_error( 'raisely_api_key', 'raisely_notice', 'Authentication successful.', 'success' );
-    } else {
-      update_option( 'raisely_access_token', '' );
-    }
-  }
-
-  /**
-   * Handle failed login via Raisely Login API.
-   * 
-   * Hooked into `raisely_login_post_request_fail` action.
-   * 
-   * @param   object  $body     The response body.
-   * @param   int     $code     HTTP response code.
-   * @param   array   $response The response object.
-   * @return  void
-   */
-  public function handle_failed_login( $body, $code, $response ): void
-  {
-    switch($body->status) {
-      case 401 :
-        $message = $body->detail;
-        break;
-      default :
-        $message = 'Something went wrong. Please try again';
-    }
-    update_option( 'raisely_auth_method', '' );
-    update_option( 'raisely_access_token', '' );
-    add_settings_error( 'raisely_api_key', 'raisely_notice', $message, 'error' );
   }
 
   /**
@@ -321,8 +197,6 @@ class Settings
     switch( $this->get_setting( 'auth_method' ) ) {
       case 'api_key' :
         return sprintf( "%s You have successfully authenticated this plugin using a Raisely Campaign API Key.", $check );
-      case 'access_token' :
-        return sprintf( "%s You have successfully authenticated this plugin using your Raisely email %s.", $check, $this->get_setting( 'login_credentials' )['username'] );
       default :
         return 'Something has gone wrong. Click the reset authentication button below to try again.';
     }

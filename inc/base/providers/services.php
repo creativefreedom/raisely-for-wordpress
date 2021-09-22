@@ -36,7 +36,9 @@ class Services
 	 */
 	public function activate(): void
 	{
-		if( ! get_option( 'raisely_api_key', false ) && ! get_option( 'raisely_access_token', false ) ) {
+		$auth_method = get_option( 'raisely_auth_method', false );
+		
+		if( ! $auth_method || ! get_option( "raisely_{$auth_method}", false ) ) {
       set_transient( 'raisely-setup-notice', true, 5 );
     }
 	}
@@ -52,8 +54,5 @@ class Services
 	{
 		delete_option( 'raisely_api_key' );
 		delete_option( 'raisely_auth_method' );
-		delete_option( 'raisely_access_token' );
-		delete_option( 'raisely_login_credentials' );
 	}
-
 }

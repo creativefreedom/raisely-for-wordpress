@@ -77,22 +77,4 @@ class API
         return $this->connection->make_request( 'campaigns' );
     }
   }
-
-  /**
-   * POST request handler
-   * 
-   * @access  public
-   * 
-   * @param   string  $route  Raisely API endpoint
-   * @param   array   $args   POST body arguments
-   * @return  object          Response body
-   */
-  public function post( string $route, array $args )
-  {
-    switch( $route ) {
-      case 'login' :
-        return $this->connection->make_request( $route, null, $args, 'POST' );
-    }
-  }
-
 }

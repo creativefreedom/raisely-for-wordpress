@@ -33,15 +33,6 @@
         </div>
         <?php submit_button( 'Submit' ); ?>
       </form>
-      <form method="post" action="options.php">
-        <div class="postbox">
-          <?php 
-            settings_fields( 'raisely-login-settings' );
-            do_settings_sections( 'raisely_login_settings' );
-          ?>
-        </div>
-        <?php submit_button( 'Login' ); ?>
-      </form>
     </div>
   <?php endif; ?>
 </div>
