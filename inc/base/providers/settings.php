@@ -40,8 +40,8 @@ class Settings
   public function register_admin_pages()
   {
     add_menu_page(
-      'Raisely Donation Form Settings',
-      'Raisely',
+      __( 'Raisely Donation Form Settings', 'raisely' ),
+      __( 'Raisely', 'raisely' ),
       'manage_options',
       'raisely_settings',
       function() { raisely()->render( 'layouts', 'settings' ); },
@@ -80,7 +80,7 @@ class Settings
     // Add Settings Sections
     add_settings_section(
       'raisely-api-settings',
-      'Authenticate with API Key',
+      __( 'Authenticate with API Key', 'raisely' ),
       function(){ raisely()->render( 'partials', 'api-settings-fields' ); },
       'raisely_settings'
     );
@@ -160,7 +160,7 @@ class Settings
   public function handle_successful_api_key_test( $body )
   {
     update_option( 'raisely_auth_method', 'api_key' );
-    add_settings_error( 'raisely_api_key', 'raisely_notice', 'Authentication successful. API Key saved.', 'success' );
+    add_settings_error( 'raisely_api_key', 'raisely_notice', __( 'Authentication successful. API Key saved.', 'raisely' ), 'success' );
   }
   
   /**
@@ -180,7 +180,7 @@ class Settings
         $message = 'Something went wrong. Please try again';
     }
     update_option( 'raisely_auth_method', '' );
-    add_settings_error( 'raisely_api_key', 'raisely_notice', $message, 'error' );
+    add_settings_error( 'raisely_api_key', 'raisely_notice', __( $message, 'raisely' ), 'error' );
   }
 
   /**
@@ -192,13 +192,12 @@ class Settings
    */
   protected function _get_auth_section_title(): string
   {
-    $check = '<span class="dashicons dashicons-yes-alt" style="color: green;"></span>';
-
+    $check = '<span class="dashicons dashicons-yes-alt" style="color: green;"></span> ';
     switch( $this->get_setting( 'auth_method' ) ) {
       case 'api_key' :
-        return sprintf( "%s You have successfully authenticated this plugin using a Raisely Campaign API Key.", $check );
+        return $check . __( 'You have successfully authenticated this plugin using a Raisely Campaign API Key.', 'raisely' );
       default :
-        return 'Something has gone wrong. Click the reset authentication button below to try again.';
+        return __( 'Something has gone wrong. Click the reset authentication button below to try again.', 'raisely' );
     }
   }
 }

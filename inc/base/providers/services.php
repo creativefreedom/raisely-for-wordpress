@@ -25,6 +25,8 @@ class Services
 	{
 		register_activation_hook( RAISELY_WP_PLUGIN_FILE, [$this, 'activate'] );
 		register_deactivation_hook( RAISELY_WP_PLUGIN_FILE, [$this, 'deactivate'] );
+
+		add_action( 'plugins_loaded', [$this, 'load_text_domain'] );
 	}
 
 	/**
@@ -37,7 +39,7 @@ class Services
 	public function activate(): void
 	{
 		$auth_method = get_option( 'raisely_auth_method', false );
-		
+
 		if( ! $auth_method || ! get_option( "raisely_{$auth_method}", false ) ) {
       set_transient( 'raisely-setup-notice', true, 5 );
     }
@@ -54,5 +56,14 @@ class Services
 	{
 		delete_option( 'raisely_api_key' );
 		delete_option( 'raisely_auth_method' );
+	}
+
+	/**
+	 * Load textdomain.
+	 *
+	 * @return void
+	 */
+	public function load_text_domain() {
+		load_plugin_textdomain( 'raisely', false, basename( dirname( RAISELY_WP_PLUGIN_FILE ) ) . DIRECTORY_SEPARATOR . 'languages' );
 	}
 }

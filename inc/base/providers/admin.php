@@ -39,8 +39,12 @@ class Admin
     if( get_transient( 'raisely-setup-notice' ) ) {
 
       // Add plugin activated notice
-      $message = "<p>Raisely Donation Form plugin activated. Get started by <a href='%s'>setting up your API access</a>.</p>";
-      $message = sprintf( $message, menu_page_url( 'raisely_settings', false ) );
+      $message = sprintf(  
+        "<p>%s <a href='%s'>%s</a>.</p>",
+        __( 'Raisely Donation Form plugin activated. Get started by', 'raisely' ),
+        menu_page_url( 'raisely_settings', false ),
+        __( 'setting up your API access', 'raisely' ),
+      );
 
       printf( "<div class='updated notice is-dismissible'>%s</div>", $message );
 

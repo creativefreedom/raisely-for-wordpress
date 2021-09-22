@@ -8,7 +8,7 @@ import "./styles.css";
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+const { __, sprintf } = wp.i18n;
 const { useEffect, useState, useRef, useCallback } = wp.element;
 const apiFetch = wp.apiFetch;
 const {
@@ -57,7 +57,9 @@ export default function DonationFormEdit({ attributes, setAttributes, ...props }
         if (res.auth) {
           setCampaignsList(res.data);
         } else {
-          setError(<span>Setup your connection with Raisely on the <a href={window?.raiselyBlocks?.settingsPage} target="_blank">Raisely Settings page</a> to retrieve a list of your Raisely campaigns.</span>)
+          setError(
+            <span>{__('Setup your connection with Raisely on the', 'raisely')} <a href={window?.raiselyBlocks?.settingsPage} target="_blank">{__('Raisely Settings page', 'raisely')}</a> {__('to retrieve a list of your Raisely campaigns.', 'raisely')}</span>
+          )
         }
       }
     }).catch((e) => {
@@ -65,7 +67,7 @@ export default function DonationFormEdit({ attributes, setAttributes, ...props }
         console.error(e);
         setCampaignsList([]);
         setLoading(false);
-        setError("Oops... Something went wrong. Please try again later.")
+        setError(__("Oops... Something went wrong. Please try again later.", 'raisely'))
       }
     });
 
@@ -108,7 +110,7 @@ export default function DonationFormEdit({ attributes, setAttributes, ...props }
           {preview && (
             <ToolbarButton
               className="components-toolbar__control"
-              label={__('Edit URL')}
+              label={__('Edit URL', 'raisely')}
               icon={'edit'}
               onClick={() => setPreview(false)}
             />
@@ -119,18 +121,16 @@ export default function DonationFormEdit({ attributes, setAttributes, ...props }
         {!preview ? (
           <Placeholder
             icon={<BlockIcon icon={icon} showColors />}
-            label={`${title} Campaign`}
+            label={sprintf(__(`%s Campaign`, 'raisely'), title)}
             className="wp-block-embed"
-            instructions={__(
-              'Raisely Campaign you wish to embed'
-            )}
+            instructions={__('Raisely Campaign you wish to embed', 'raisely')}
           >
             {loading ? (
               <Spinner />
             ) : error ? (
               <p>{error}</p>
             ) : !campaignsList.length ? (
-              <p>There are no campaigns to select from.</p>
+              <p>{__('There are no campaigns to select from.', 'raisely')}</p>
             ) : (
               <>
                 <SelectControl
