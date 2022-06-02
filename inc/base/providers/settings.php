@@ -39,13 +39,13 @@ class Settings
    */
   public function register_admin_pages()
   {
-    add_menu_page(
+    add_submenu_page(
+      'options-general.php', 
       __( 'Raisely Donation Form Settings', 'raisely' ),
       __( 'Raisely', 'raisely' ),
       'manage_options',
       'raisely_settings',
-      function() { raisely()->render( 'layouts', 'settings' ); },
-      base_64_Encode_SVG( file_get_contents( RAISELY_WP_PLUGIN_PATH . 'assets/raisely-icon.svg' ) ),
+      function() { raisely()->render( 'layouts', 'settings' ); }
     );
   }
 

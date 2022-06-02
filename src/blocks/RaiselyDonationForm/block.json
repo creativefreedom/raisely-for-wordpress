@@ -13,6 +13,7 @@
 	"supports": {
 		"align": false,
 		"html": false,
-    "className": false
+    "className": false,
+		"multiple": false
 	}
 }

@@ -1,14 +1,13 @@
-const ScriptAppender = ({ condition, src, parent, onMount }) => {
-
+const ScriptAppender = ({ condition, src, parent, onMount, id }) => {
   // Check condition
   if (!condition) return null;
 
   // Check if script already exists
   const existingScript = parent.querySelector(`script[src="${src}"]`);
+
   if (!existingScript) {
-    console.log('creating script');
     const script = document.createElement('script');
-    script.id = 'myID1';
+    script.id = id;
     script.src = src;
 
     if (!!onMount) {

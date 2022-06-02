@@ -1,30 +1,37 @@
+import "./styles.css";
+
+import RaiselyFormEmbed from '../../components/RaiselyFormEmbed'
+import ScriptAppender from '../../components/ScriptAppender'
 /**
  * Internal dependencies
  */
 import { metadata } from './index';
-import ScriptAppender from '../../components/ScriptAppender'
-import "./styles.css";
+import { onIframeLoad } from "../../util";
 
 /**
  * WordPress dependencies
  */
-const { __, sprintf } = wp.i18n;
+const { __, _x, sprintf } = wp.i18n;
 const { useEffect, useState, useRef, useCallback } = wp.element;
 const apiFetch = wp.apiFetch;
 const {
   BlockIcon,
-  BlockControls
+  BlockControls,
+  useBlockProps,
+  InspectorControls
 } = wp.blockEditor;
 const {
-  Placeholder,
+  BaseControl,
   Button,
   SelectControl,
+  PanelBody,
+  Placeholder,
   Spinner,
   ToolbarButton,
   ToolbarGroup,
 } = wp.components;
 
-export default function DonationFormEdit({ attributes, setAttributes, ...props }) {
+export default function DonationFormEdit({ attributes, setAttributes, clientId, ...props }) {
   const { campaignPath } = attributes;
   const { icon, title } = metadata;
 
@@ -34,13 +41,12 @@ export default function DonationFormEdit({ attributes, setAttributes, ...props }
   const [embedCampaignPath, setCampaignPath] = useState(campaignPath);
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [preview, setPreview] = useState(!!campaignPath);
-  const [formWrapper, setFormWrapper] = useState(null);
-
-  const formWrapperRef = useCallback(setFormWrapper, []);
+  const [embedKey, setEmbedKey] = useState(1);
 
   const isIframeLoaded = useRef(null);
   const isStillMounted = useRef();
 
+  const blockProps = useBlockProps();
 
   useEffect(() => {
     isStillMounted.current = true;
@@ -79,51 +85,29 @@ export default function DonationFormEdit({ attributes, setAttributes, ...props }
     };
   }, []);
 
-  const onScriptMount = () => {
-    const iframeLoadedInterval = setInterval(() => {
-      const iframe = formWrapper.querySelector('iframe');
-
-      if (!!iframe) {
-        // Set on load events
-        if (iframe.attachEvent) {
-          iframe.attachEvent("onload", () => {
-            setIframeLoaded(true)
-          });
-        } else {
-          iframe.onload = () => {
-            setIframeLoaded(true);
-          }
-        }
-
-        iframe.style.pointerEvents = 'none';
-        clearInterval(isIframeLoaded.current);
-        isIframeLoaded.current = null;
-      }
-    }, 1000);
-    isIframeLoaded.current = iframeLoadedInterval;
-  }
+  const instructions = !error ? __('Raisely Campaign you wish to embed', 'raisely') : '';
 
   return (
     <>
-      <BlockControls>
-        <ToolbarGroup>
-          {preview && (
-            <ToolbarButton
-              className="components-toolbar__control"
-              label={__('Edit URL', 'raisely')}
-              icon={'edit'}
-              onClick={() => setPreview(false)}
-            />
-          )}
-        </ToolbarGroup>
-      </BlockControls>
-      <div class="wp-raisely-block-donation-form">
+      <div {...blockProps}>
+        <BlockControls>
+          <ToolbarGroup>
+            {preview && (
+              <ToolbarButton
+                className="components-toolbar__control"
+                label={__('Edit URL', 'raisely')}
+                icon={'edit'}
+                onClick={() => setPreview(false)}
+              />
+            )}
+          </ToolbarGroup>
+        </BlockControls>
         {!preview ? (
           <Placeholder
             icon={<BlockIcon icon={icon} showColors />}
             label={sprintf(__(`%s Campaign`, 'raisely'), title)}
             className="wp-block-embed"
-            instructions={__('Raisely Campaign you wish to embed', 'raisely')}
+            instructions={instructions}
           >
             {loading ? (
               <Spinner />
@@ -132,38 +116,55 @@ export default function DonationFormEdit({ attributes, setAttributes, ...props }
             ) : !campaignsList.length ? (
               <p>{__('There are no campaigns to select from.', 'raisely')}</p>
             ) : (
-              <>
-                <SelectControl
+              <form onSubmit={() => {
+                setAttributes({ campaignPath: embedCampaignPath })
+                setPreview(true);
+              }}>
+                <select
                   className="raisely-placeholder__input"
                   value={campaignPath}
-                  onChange={value => setCampaignPath(value)}
-                  options={campaignsList.map(({ path, name }) => ({ value: path, label: name }))}
-                />
-                <Button className="is-primary" onClick={() => {
-                  console.log({ embedCampaignPath })
-                  setAttributes({ campaignPath: embedCampaignPath })
-                  setPreview(true);
-                }}>
-                  Embed
-                </Button></>
+                  onChange={e => setCampaignPath(e.target.value)}
+                >
+                  {campaignsList.map(({ path, name }) => (
+                    <option key={path} value={path}>{name}</option>
+                  ))}
+                </select>
+                <Button className="is-primary" type="submit">
+                  {_x('Embed', 'raisely')}
+                </Button>
+              </form>
             )}
           </Placeholder>
         ) : (
-          <div
-            id="raisely-donate"
-            data-campaign-path={campaignPath}
-            data-width="100%"
-            data-height="800"
-            ref={formWrapperRef}
-          >
+          <>
+            <InspectorControls>
+              <PanelBody
+                title={__('Campaign Options', 'raisely')}
+                initialOpen={true}
+              >
+                <BaseControl>
+                  <SelectControl
+                    className="raisely-placeholder__input"
+                    label="Select a campaign"
+                    value={campaignPath}
+                    onChange={value => {
+                      setAttributes({ campaignPath: value });
+                      setCampaignPath(value);
+                      setEmbedKey(embedKey + 1);
+                    }}
+                    options={campaignsList.map(({ path, name }) => ({ value: path, label: name }))}
+                  />
+                </BaseControl>
+              </PanelBody>
+            </InspectorControls>
             {!iframeLoaded && (<Spinner />)}
-            <ScriptAppender
-              condition={!!formWrapper}
-              src="https://cdn.raisely.com/v3/public/embed.js"
-              parent={formWrapper}
-              onMount={onScriptMount}
+            <RaiselyFormEmbed
+              key={`${clientId}_raisely_embed_${embedKey}`}
+              scriptId={clientId}
+              campaignPath={campaignPath}
+              onIframeLoaded={() => setIframeLoaded(true)}
             />
-          </div>
+          </>
         )}
       </div>
     </>
