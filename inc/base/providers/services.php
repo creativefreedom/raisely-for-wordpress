@@ -41,7 +41,7 @@ class Services
 		$auth_method = get_option( 'raisely_auth_method', false );
 
 		if( ! $auth_method || ! get_option( "raisely_{$auth_method}", false ) ) {
-      set_transient( 'raisely-setup-notice', true, 5 );
+      set_transient( 'raisely-setup-notice', true, 0 );
     }
 	}
 
