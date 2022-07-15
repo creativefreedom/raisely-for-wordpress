@@ -26,6 +26,7 @@ class Assets
   private function _bootstrap()
   {
     add_action( 'enqueue_block_editor_assets', [$this, 'block_assets'] );
+    add_action( 'wp_enqueue_scripts', [$this, 'enqueue_scripts'] );
     add_action( 'admin_enqueue_scripts', [$this, 'admin_assets'] );
   }
 
@@ -48,6 +49,37 @@ class Assets
     ] );
   }
 
+  /**
+   * Enqueue dependency scripts
+   * 
+   * Hooked into `wp_enqueue_scripts` action.
+   * 
+   * @return  void
+   */
+  public function enqueue_scripts()
+  {
+    global $post;
+
+    wp_register_script( 'raisely-embed', 'https://cdn.raisely.com/v3/public/embed.js', [], 'v3', true );
+
+    /**
+     * Enqueue the raisely-embed if the raisely_donation_form shortcode is being used
+     */
+    if ( 
+      is_a( $post, 'WP_Post' ) && 
+      has_shortcode( $post->post_content, 'raisely_donation_form') 
+    ) {
+        wp_enqueue_script( 'raisely-embed');
+    }
+  }
+
+  /**
+   * Enqueue admin assets.
+   * 
+   * Hooked into `admin_enqueue_scripts` action.
+   * 
+   * @return  void
+   */
   public function admin_assets()
   {
     wp_register_script( 'raisely_admin_notice', RAISELY_WP_PLUGIN_URL . 'assets/admin-notice.js', ['jquery'] );

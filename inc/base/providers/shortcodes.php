@@ -42,14 +42,12 @@ class Shortcodes
   {
     // Form ID
     if( isset( $args['campaign'] ) ) {
-      $script   = '<script src="https://cdn.raisely.com/v3/public/embed.js"></script>';
-      
+
       printf(
-        '<div id="raisely-donate" data-campaign-path="%s" data-width="%s" data-height="%s">%s</div>',
+        '<div class="raisely-donate" data-campaign-path="%s" data-width="%s" data-height="%s"></div>',
         $args['campaign'],
         isset( $args['width'] ) ? $args['width'] : '100%',
         isset( $args['height'] ) ? $args['height'] : '800',
-        $script
       );
     }
   }

@@ -1,7 +1,6 @@
 <?php
 /**
  * Plugin Name: Raisely Donation Form
- * Plugin URI: https://raisely.com
  * Description: Add a donation form to a page or post via shortcode or Raisely Donation Form block.
  * Version: 1.0.0
  * Author: Raisely

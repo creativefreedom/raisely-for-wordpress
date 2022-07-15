@@ -50,41 +50,13 @@ class Blocks
   {
     if( empty( $attributes['campaignPath'] ) ) return;
 
+    wp_enqueue_script( 'raisely-embed' );
+
     ob_start();
-    do_shortcode( sprintf( 
-      '[raisely_donation_form campaign=%s]', 
-      $attributes['campaignPath'] 
-    ) );
+    do_shortcode( sprintf( '[raisely_donation_form campaign=%s]', $attributes['campaignPath'] ) );
     $block_markup = sprintf( '<div class="wp-raisely-block-donation-form">%s</div>', ob_get_contents() );
     ob_get_clean();
 
     return $block_markup;
   }
-
-  /**
-   * Render donation form shortcode.
-   * 
-   * Hooked in `raisely_donation_form` shortcode.
-   * 
-   * @access  public
-   * 
-	 * @param   array   $atts Shortcode attributes.
-	 * @return  string
-   */
-  public function render_donation_form( $args )
-  {
-    // Form ID
-    if( isset( $args['campaign'] ) ) {
-      $script   = '<script src="https://cdn.raisely.com/v3/public/embed.js"></script>';
-      
-      printf(
-        '<div id="raisely-donate" data-campaign-path="%s" data-width="%s" data-height="%s">%s</div>',
-        $args['campaign'],
-        isset( $args['width'] ) ? $args['width'] : '100%',
-        isset( $args['height'] ) ? $args['height'] : '800',
-        $script
-      );
-    }
-  }
-
 }
