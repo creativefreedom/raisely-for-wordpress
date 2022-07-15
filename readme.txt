@@ -7,11 +7,20 @@ Stable tag: 5.9
 Requires PHP: 7.3.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
- 
-Add a donation form to a page or post via shortcode or Raisely Donation Form block.
+
+Add your Raisely (raisely.com) donation form to your site via shortode or Raisely Donation Form block.
 
 == Description ==
-The Raisely Donation Form plugin adds shortcodes and blocks to allow the user to embed Raisely Donation Forms via the Wordpress editor.
+The Raisely Donation Form plugin adds shortcodes and blocks to allow the user to embed [Raisely](https://raisely.com) Donation Forms via the Wordpress editor.
+
+Features:
+
+* Add your [Raisely](https://raisely.com) API Key to this plugin to fetch a list of your active campaigns to embed a donation form.
+* Use the Raisely Donation Form block to select one of your Raisely campaigns from a list to embed on your post or page.
+* Use the `[raisely_donation_form]` shortcode to embed your form onto a post or page.
+
+Note:
+This plugin uses an external [Raisely](https://raisely.com) script to embed Raisely forms on your website. See the Raisely Privacy Policy for more information at [raisely.com/privacy](https://www.raisely.com/privacy).
 
 == Installation ==
 1. Via the Add New plugins page search for Raisely Donation Form.
