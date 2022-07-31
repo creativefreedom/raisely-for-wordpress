@@ -14,7 +14,7 @@
           <label for="raisely_api_key"><?php _e( 'API Key', 'raisely' ); ?></label>
         </th>
         <td>
-          <input type="text" class="code widefat" name="raisely_api_key" id="raisely_api_key" placeholder="Enter your API Key" value="<?= raisely()->settings->get_setting('api_key'); ?>">
+          <input type="text" class="code widefat" name="raisely_api_key" id="raisely_api_key" placeholder="Enter your API Key" value="<?php print raisely()->settings->get_setting('api_key'); ?>">
           <?php 
             printf( 
               '<p class="description">%s <a href="https://admin.raisely.com/campaigns/" target="_blank">%s</a> %s</p>',
